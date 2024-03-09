@@ -1,0 +1,11 @@
+.app{
+  padding: 15px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  gap:20px;
+  min-height: 100vh;
+
+  background: url('./assets/forest.jpg') no-repeat center center/cover;
+}
