@@ -9,17 +9,19 @@ const WhosThatPokemon = () => {
   const [loading, setLoading] = useState(true)
   const [hidden, setHidden] = useState(true)
   const [options, setOptions] = useState([])
+  const [reset, setReset] = useState(false)
 
   const howManyPokemons = 1000
 
-  const randomNumber = Math.floor(Math.random() * howManyPokemons) + 1
-  const option1 = Math.floor(Math.random() * howManyPokemons) + 1
-  const option2 = Math.floor(Math.random() * howManyPokemons) + 1
-
-
   useEffect(() => {
-    setLoading(true)
+    setPokemon(null)
+    setHidden(true)
     const fetchData = async () => {
+      const randomNumber = Math.floor(Math.random() * howManyPokemons) + 1
+      const option1 = Math.floor(Math.random() * howManyPokemons) + 1
+      const option2 = Math.floor(Math.random() * howManyPokemons) + 1
+
+      setLoading(true)
       try {
         const [pokemonResponse, option1Response, option2Response] = await Promise.all([
           axios.get(`https://pokeapi.co/api/v2/pokemon/${randomNumber}`),
@@ -31,16 +33,16 @@ const WhosThatPokemon = () => {
         setOptions([pokemonResponse.data.name, option1Response.data.name, option2Response.data.name])
         setLoading(false);
       } catch (error) {
-        console.error(error);
+        setError('Ha ocurrido un error al cargar los datos.')
         setLoading(false);
       }
     };
 
     fetchData();
-  }, [])
+  }, [reset])
 
   const handleReset = () => {
-    window.location.reload()
+    setReset(prevReset => !prevReset)
   }
 
 
